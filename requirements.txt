@@ -1,0 +1,9 @@
+﻿streamlit>=1.28
+transformers>=4.41
+torch>=2.2
+spacy>=3.7
+yake>=0.4.8
+deep-translator>=1.11.4
+feedparser>=6.0.11
+requests>=2.32
+pytest>=8.0
