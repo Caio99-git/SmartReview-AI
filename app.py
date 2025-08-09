@@ -1,10 +1,10 @@
+import os, sys
+# Ensure repo root is importable on Streamlit Cloud
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+if APP_ROOT not in sys.path:
+    sys.path.insert(0, APP_ROOT)
+
 import streamlit as st
-try:
-    import transformers, torch, spacy
-    st.caption(f"transformers={transformers.__version__}, torch={torch.__version__}, spacy={spacy.__version__}")
-except Exception as e:
-    st.error(f"Import check failed: {e}")
-from datetime import date
 from src.summarizer import summarize
 from src.sentiment import get_sentiment
 from src.translator import translate
@@ -12,26 +12,22 @@ from src.keywords import extract_keywords
 from src.ner import get_entities
 from src.daily_brief import get_weather, get_news
 
-# App title
 st.title("Text Toolkit & Daily Utilities")
 
-# Sidebar mode selector lets user pick what tool to use
 mode = st.sidebar.selectbox("Select mode", [
     "Summarize Text", "Sentiment Analysis", "Translate Text",
     "Keyword Extraction", "Named-Entity Recognition", "Daily Brief"
 ])
 
-# Summarization tool 
 if mode == "Summarize Text":
     st.header("Summarization")
     text = st.text_area("Enter text to summarize", height=200)
     min_len, max_len = st.slider("Summary length", 10, 500, (30, 120), step=10)
     if st.button("Summarize"):
-        with st.spinner("Summarizing…"):  # Show spinner during processing
+        with st.spinner("Summarizing…"):
             result = summarize(text, min_len=min_len, max_len=max_len)
-        st.success(result)  # Show result when done
+        st.success(result)
 
-# Sentiment Analysis tool
 elif mode == "Sentiment Analysis":
     st.header("Sentiment Analysis")
     text = st.text_area("Enter text to analyze sentiment", height=200)
@@ -40,7 +36,6 @@ elif mode == "Sentiment Analysis":
             result = get_sentiment(text)
         st.success(result)
 
-# Translation tool
 elif mode == "Translate Text":
     st.header("Translator")
     text = st.text_area("Enter text to translate", height=200)
@@ -52,7 +47,6 @@ elif mode == "Translate Text":
             result = translate(text, source=src, target=tgt)
         st.success(result)
 
-# Keyword Extraction tool
 elif mode == "Keyword Extraction":
     st.header("Keyword Extraction")
     text = st.text_area("Enter text to extract keywords from", height=200)
@@ -62,18 +56,16 @@ elif mode == "Keyword Extraction":
         for kw, score in keywords:
             st.write(f"- {kw} (score: {score:.2f})")
 
-# Named Entity Recognition tool
 elif mode == "Named-Entity Recognition":
     st.header("Named-Entity Recognition")
     text = st.text_area("Enter text for NER", height=200)
     if st.button("Detect Entities"):
         ents = get_entities(text)
         if ents:
-            st.table(ents)  # Show entities in a table
+            st.table(ents)
         else:
             st.info("No entities found.")
 
-# Daily Brief tool (weather + news)
 elif mode == "Daily Brief":
     st.header("Your Daily Brief")
     city = st.text_input("City for weather (e.g. London)", "Los Angeles")
@@ -99,7 +91,3 @@ elif mode == "Daily Brief":
             link = getattr(entry, "link", "#")
             st.write(f"- [{title}]({link})")
 
-# Sidebar footer
-st.sidebar.markdown("---")
-
-st.sidebar.write("Built with Streamlit")
