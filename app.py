@@ -5,6 +5,12 @@ if APP_ROOT not in sys.path:
     sys.path.insert(0, APP_ROOT)
 
 import streamlit as st
+try:
+    import transformers, torch, spacy, numpy
+    st.caption(f"OK: py=3.11, transformers={transformers.__version__}, torch={torch.__version__}, spacy={spacy.__version__}, numpy={numpy.__version__}")
+except Exception as e:
+    st.error(f"Import check failed: {e}")
+
 from src.summarizer import summarize
 from src.sentiment import get_sentiment
 from src.translator import translate
@@ -90,4 +96,5 @@ elif mode == "Daily Brief":
             title = getattr(entry, "title", "Untitled")
             link = getattr(entry, "link", "#")
             st.write(f"- [{title}]({link})")
+
 
