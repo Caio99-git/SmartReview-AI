@@ -1,4 +1,9 @@
 import streamlit as st
+try:
+    import transformers, torch, spacy
+    st.caption(f"transformers={transformers.__version__}, torch={torch.__version__}, spacy={spacy.__version__}")
+except Exception as e:
+    st.error(f"Import check failed: {e}")
 from datetime import date
 from src.summarizer import summarize
 from src.sentiment import get_sentiment
@@ -96,4 +101,5 @@ elif mode == "Daily Brief":
 
 # Sidebar footer
 st.sidebar.markdown("---")
+
 st.sidebar.write("Built with Streamlit")
