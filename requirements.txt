@@ -1,9 +1,8 @@
 streamlit==1.35.0
 transformers==4.41.1
+tokenizers==0.19.1
 torch==2.5.1
 spacy==3.7.4
-yake==0.4.8
+# ship the small English model used by spacy.load("en_core_web_sm")
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
 deep-translator==1.11.4
-feedparser==6.0.11
-requests==2.32.3
-numpy==1.26.4
