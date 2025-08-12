@@ -6,8 +6,8 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 if APP_ROOT not in sys.path:
     sys.path.insert(0, APP_ROOT)
 
-st.set_page_config(page_title="SmartReview AI", page_icon="🧰", layout="centered")
-st.title("🧰 Text Toolkit & Daily Utilities")
+st.set_page_config(page_title="SmartReview AI", layout="centered")
+st.title("Text Toolkit & Daily Utilities")
 st.caption("Summarize • Sentiment • Translate • Keywords • NER • Daily Brief")
 
 # Import app tools
@@ -24,7 +24,7 @@ mode = st.sidebar.selectbox(
      "Keyword Extraction", "Named-Entity Recognition", "Daily Brief"]
 )
 
-# ---------- Summarization ----------
+# Summarization
 if mode == "Summarize Text":
     st.header("Summarization")
     text = st.text_area("Enter text to summarize", height=200)
@@ -39,7 +39,7 @@ if mode == "Summarize Text":
             except Exception as e:
                 st.error(f"Summarization failed: {e}")
 
-# ---------- Sentiment ----------
+# Sentiment
 elif mode == "Sentiment Analysis":
     st.header("Sentiment Analysis")
     text = st.text_area("Enter text to analyze sentiment", height=200)
@@ -53,7 +53,7 @@ elif mode == "Sentiment Analysis":
             except Exception as e:
                 st.error(f"Sentiment analysis failed: {e}")
 
-# ---------- Translate ----------
+# Translate
 elif mode == "Translate Text":
     st.header("Translator")
     text = st.text_area("Enter text to translate", height=200)
@@ -70,7 +70,7 @@ elif mode == "Translate Text":
             except Exception as e:
                 st.error(f"Translation failed: {e}")
 
-# ---------- Keywords ----------
+# Keywords
 elif mode == "Keyword Extraction":
     st.header("Keyword Extraction")
     text = st.text_area("Enter text to extract keywords from", height=200)
@@ -88,7 +88,7 @@ elif mode == "Keyword Extraction":
         except Exception as e:
             st.error(f"Keyword extraction failed: {e}")
 
-# ---------- NER ----------
+# NER
 elif mode == "Named-Entity Recognition":
     st.header("Named-Entity Recognition")
     text = st.text_area("Enter text for NER", height=200)
@@ -104,7 +104,7 @@ elif mode == "Named-Entity Recognition":
         except Exception as e:
             st.error(f"NER failed: {e}")
 
-# ---------- Daily Brief ----------
+# Daily Brief
 elif mode == "Daily Brief":
     st.header("Your Daily Brief")
     city = st.text_input("City for weather (e.g. London)", "Los Angeles")
@@ -132,3 +132,4 @@ elif mode == "Daily Brief":
                 st.write(f"- [{title}]({link})")
         except Exception as e:
             st.error(f"Daily brief failed: {e}")
+
