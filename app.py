@@ -1,16 +1,4 @@
-import os, sys
-# Ensure repo root is importable on Streamlit Cloud
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-if APP_ROOT not in sys.path:
-    sys.path.insert(0, APP_ROOT)
-
 import streamlit as st
-try:
-    import transformers, torch, spacy, numpy
-    st.caption(f"OK: py=3.11, transformers={transformers.__version__}, torch={torch.__version__}, spacy={spacy.__version__}, numpy={numpy.__version__}")
-except Exception as e:
-    st.error(f"Import check failed: {e}")
-
 from src.summarizer import summarize
 from src.sentiment import get_sentiment
 from src.translator import translate
@@ -18,6 +6,7 @@ from src.keywords import extract_keywords
 from src.ner import get_entities
 from src.daily_brief import get_weather, get_news
 
+st.set_page_config(page_title="SmartReview AI", page_icon="🧰", layout="centered")
 st.title("Text Toolkit & Daily Utilities")
 
 mode = st.sidebar.selectbox("Select mode", [
@@ -96,5 +85,6 @@ elif mode == "Daily Brief":
             title = getattr(entry, "title", "Untitled")
             link = getattr(entry, "link", "#")
             st.write(f"- [{title}]({link})")
+
 
 
