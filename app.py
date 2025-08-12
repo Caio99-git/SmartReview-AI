@@ -1,4 +1,8 @@
+import sys, os
 import streamlit as st
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+if APP_ROOT not in sys.path:
+    sys.path.insert(0, APP_ROOT)
 from src.summarizer import summarize
 from src.sentiment import get_sentiment
 from src.translator import translate
@@ -85,6 +89,7 @@ elif mode == "Daily Brief":
             title = getattr(entry, "title", "Untitled")
             link = getattr(entry, "link", "#")
             st.write(f"- [{title}]({link})")
+
 
 
 
